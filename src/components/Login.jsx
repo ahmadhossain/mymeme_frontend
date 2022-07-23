@@ -7,7 +7,7 @@ import { gapi } from 'gapi-script'
 import { GoogleLogin } from "react-google-login"
 
 const Login = () => {
-    const clientId = "320321363219-42r6icdjdil9epcq4u2va87gbrrn43v1.apps.googleusercontent.com"
+    const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID
     const onSuccess= (res) =>{
         console.log(res.profileObj);
     }
@@ -36,7 +36,7 @@ const Login = () => {
                 muted
                 autoPlay
             />
-            <div className='absolute flex flex-col p-32 items-center top-0 right-0 left-0 bottom-0 bg-blackOverlay'>
+            <div className='absolute flex flex-col py-44 items-center top-0 right-0 left-0 bottom-0 bg-blackOverlay'>
               <div className='py-4'>
                 <IconContext.Provider value={{ color: "#3b82f6", size: "5rem" }}>
                     <SiMonster />
