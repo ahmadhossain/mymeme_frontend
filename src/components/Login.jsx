@@ -1,19 +1,32 @@
-import React from 'react'
+import { useState,useEffect } from 'react'
 import { SiMonster } from 'react-icons/si'
 import { IconContext } from "react-icons"
-import { useEffect } from 'react'
 import socialMedia from '../assets/socialMedia.mp4'
 import { gapi } from 'gapi-script'
-import { GoogleLogin } from "react-google-login"
+import { GoogleLogin,GoogleLogout } from "react-google-login"
+import axios from 'axios'
 
 const Login = () => {
+    const [user,setUser] = useState(null);
+    const [data,setData] = useState(null);
     const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID
-    const onSuccess= (res) =>{
-        console.log(res.profileObj);
+ 
+    useEffect(()=>{
+      data && data.length === 0 && axios.post('http://localhost:1337/api/mymeme-users', { data: user});
+    },[user]);
+    const onSuccess= (response) =>{
+        const { name, email, imageUrl } = response.profileObj;
+        setUser({name: name, email: email, imageUrl: imageUrl});
+        axios.get(`http://localhost:1337/api/mymeme-users?filters[email][$eq]=${email}`)
+             .then( res =>  setData(res.data.data));
     }
+   
     const onFailure = (res) =>{
         console.log(res);
     }
+    const onLogout = (res) =>{
+      setUser(null);
+  }
 
     useEffect(()=>{
       function start(){
@@ -43,14 +56,20 @@ const Login = () => {
                 </IconContext.Provider>
               </div>
               <div id='signInButton' >
-                  <GoogleLogin
+                  {!user ? <GoogleLogin
                       clientId = {clientId}
                       buttonText="Sign in with Google"
                       onSuccess={onSuccess}
                       onFailure={onFailure}
                       cookiePolicy={"single_host_origin"}
                       isSignedIn={true}
+                  />:
+                  <GoogleLogout
+                      clientId={clientId}
+                      buttonText="Sign out"
+                      onLogoutSuccess={onLogout}
                   />
+                  }
               </div>
             </div>
         </div>
