@@ -5,28 +5,22 @@ import socialMedia from '../assets/socialMedia.mp4'
 import { gapi } from 'gapi-script'
 import { GoogleLogin,GoogleLogout } from "react-google-login"
 import axios from 'axios'
+import { useNavigate } from "react-router-dom"
 
 const Login = () => {
-    const [user,setUser] = useState(null);
-    const [data,setData] = useState(null);
     const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID
- 
-    useEffect(()=>{
-      data && data.length === 0 && axios.post('http://localhost:1337/api/mymeme-users', { data: user});
-    },[user]);
-    const onSuccess= (response) =>{
-        const { name, email, imageUrl } = response.profileObj;
-        setUser({name: name, email: email, imageUrl: imageUrl});
-        axios.get(`http://localhost:1337/api/mymeme-users?filters[email][$eq]=${email}`)
-             .then( res =>  setData(res.data.data));
-    }
-   
-    const onFailure = (res) =>{
-        console.log(res);
-    }
-    const onLogout = (res) =>{
-      setUser(null);
-  }
+    // const userInfo = localStorage.getItem('user') !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : localStorage.clear();
+    // const navigate = useNavigate();
+    
+      const onSuccess = async (response) =>{
+          const { name, email, imageUrl } =  response.profileObj;
+          const doc =  { name: name, email: email, imageUrl: imageUrl };
+          localStorage.setItem('user', JSON.stringify(doc));
+          const res = await axios.get(`http://localhost:1337/api/mymeme-users?filters[email][$eq]=${email}`)
+          const data = await res.data;
+          (data.data.length === 0) &&
+          axios.post('http://localhost:1337/api/mymeme-users', { data: doc});
+      }
 
     useEffect(()=>{
       function start(){
@@ -51,25 +45,20 @@ const Login = () => {
             />
             <div className='absolute flex flex-col py-44 items-center top-0 right-0 left-0 bottom-0 bg-blackOverlay'>
               <div className='py-4'>
+                {/* Logo */}
                 <IconContext.Provider value={{ color: "#3b82f6", size: "5rem" }}>
                     <SiMonster />
                 </IconContext.Provider>
               </div>
               <div id='signInButton' >
-                  {!user ? <GoogleLogin
+                  {<GoogleLogin
                       clientId = {clientId}
                       buttonText="Sign in with Google"
                       onSuccess={onSuccess}
-                      onFailure={onFailure}
+                      onFailure={(err)=>console.log(err)}
                       cookiePolicy={"single_host_origin"}
                       isSignedIn={true}
-                  />:
-                  <GoogleLogout
-                      clientId={clientId}
-                      buttonText="Sign out"
-                      onLogoutSuccess={onLogout}
-                  />
-                  }
+                  />}
               </div>
             </div>
         </div>
