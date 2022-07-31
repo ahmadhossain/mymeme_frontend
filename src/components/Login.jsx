@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom"
 const Login = () => {
     const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID
     // const userInfo = localStorage.getItem('user') !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : localStorage.clear();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     
       const onSuccess = async (response) =>{
           const { name, email, imageUrl } =  response.profileObj;
@@ -20,6 +20,7 @@ const Login = () => {
           const data = await res.data;
           (data.data.length === 0) &&
           axios.post('http://localhost:1337/api/mymeme-users', { data: doc});
+          await navigate('/',{replace: true});
       }
 
     useEffect(()=>{
