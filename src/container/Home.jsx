@@ -6,7 +6,7 @@ import { AiOutlineClose } from "react-icons/ai"
 import { GoogleLogout } from "react-google-login"
 import { Link, Route, Routes, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { Sidebar, Login, UserProfile, Pins } from '../components'
+import { Sidebar, Login, UserProfile, Posts } from '../components'
 
 const Home = () => {
   const [toggleSidebar, setToggleSidebar] = useState(false);
@@ -32,13 +32,15 @@ const Home = () => {
   }
 
   return (
-    <div className='flex bg-gray-100 md:flex-row flex-col h-screen transition-height duration-75 ease-out'>
+    <div className='flex bg-slate-700 md:flex-row flex-col h-screen transition-height duration-75 ease-out' 
+        onClick={()=> toggleSidebar && setToggleSidebar(false)}
+        >
         {/* Medium device sidebar */}
         <div className='hidden md:flex h-screen flex-initial'>
             <Sidebar />
         </div>
         {/* Small device sidebar */}
-        <div className='flex md:hidden flex-row '>
+        <div className='flex md:hidden flex-row'>
             <div className='p-3 w-full flex flex-row justify-between items-start bg-gray-800 shadow-md'>
                   {/* Menu icon */}
                    <IconContext.Provider value={{ color: "#3b82f6" }}>
@@ -55,7 +57,7 @@ const Home = () => {
               { toggleSidebar && (
                 <div className='fixed w-4/5 bg-white h-screen shadow-md z-10 animate-slide-in'>
                   <div className='absolute w-full flex justify-end items-center p-2'>
-                    <IconContext.Provider value={{ color: "#3b82f6", size: "2.5rem" }}>
+                    <IconContext.Provider value={{ color: "#3b82f6", size: "2rem" }}>
                       <AiOutlineClose fontSize={30} onClick={()=> setToggleSidebar(false)} />
                   </IconContext.Provider>
                   </div>
@@ -66,7 +68,7 @@ const Home = () => {
           <div className='pb-2 flex-2 h-screen'>
             <Routes>
               <Route path='/user-profile/:userId' element={<UserProfile />} />
-              <Route path='/pins' element={<Pins user={user && user} />} />
+              <Route path='/*' element={<Posts user={user && user} />} />
             </Routes>
           </div>
         {/* <GoogleLogout

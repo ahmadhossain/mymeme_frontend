@@ -1,4 +1,5 @@
 import { SiMonster } from 'react-icons/si'
+import { VscHome } from 'react-icons/vsc'
 import { IconContext } from "react-icons"
 import { Link, NavLink } from 'react-router-dom'
 
@@ -20,6 +21,7 @@ const Sidebar = () => {
           to = "/"
           className={({ isActive }) => isActive ? isActiveStyle: isNotActiveStyle}
         >
+          <VscHome fontSize={30} />
           Home
         </NavLink>
         <NavLink
