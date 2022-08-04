@@ -4,8 +4,8 @@ import { IconContext } from "react-icons"
 import { Link, NavLink } from 'react-router-dom'
 
 const Sidebar = () => {
-  const isActiveStyle = 'flex items-center px-5 gap-3 text-xl font-semibold text-cyan-400 border-r-4 border-cyan-400 transition-all duration ease-in-out capitalize'
-  const isNotActiveStyle = 'flex items-center px-5 gap-3 text-xl text-gray-300 hover:text-cyan-600 transition-all duration ease-in-out capitalize'
+  const isActiveStyle = 'flex items-center px-5 gap-3 text-lg font-semibold text-cyan-400 border-r-4 border-cyan-400 transition-all duration ease-in-out capitalize'
+  const isNotActiveStyle = 'flex items-center px-5 gap-3 text-lg text-gray-300 hover:text-cyan-600 transition-all duration ease-in-out capitalize'
   return (
     <div className='flex flex-col justify-start bg-gray-800 h-full w-50 md:w-60'>
       <Link

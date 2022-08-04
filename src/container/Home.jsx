@@ -65,7 +65,7 @@ const Home = () => {
                 </div>
               )}
           </div>
-          <div className='pb-2 flex-2 h-screen'>
+          <div className='pb-2 flex-2 w-full h-screen'>
             <Routes>
               <Route path='/user-profile/:userId' element={<UserProfile />} />
               <Route path='/*' element={<Posts user={user && user} />} />
