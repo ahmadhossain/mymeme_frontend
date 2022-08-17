@@ -1,8 +1,8 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import CreatePost from "./CreatePost";
-import Feed from "./Feed";
-import Navbar from "./Navbar";
+import CreatePost from "../components/CreatePost";
+import Feed from "../components/Feed";
+import Navbar from "../components/Navbar";
 
 const Posts = ({ user }) => {
   return (

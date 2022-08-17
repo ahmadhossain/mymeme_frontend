@@ -5,7 +5,9 @@ import { AiOutlineClose } from "react-icons/ai";
 import { GoogleLogout } from "react-google-login";
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Sidebar, Login, UserProfile, Posts } from "../components";
+
+import { Sidebar, Login, UserProfile } from "../components";
+import Posts from "./Posts";
 
 const Home = () => {
   const [toggleSidebar, setToggleSidebar] = useState(false);
